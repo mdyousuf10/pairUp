@@ -1,12 +1,13 @@
 const express = require("express");
-const authMiddleware = require("./middleware/auth.middleware");
+const { authMiddleware } = require("./middleware/authmiddleware");
 const user = require("./models/user.model")
 const validateUserData = require("./utils/validations")
 const bcrypt = require("bcrypt");
+const cookieParser = require('cookie-parser')
 
 const app = express();
 app.use(express.json());
-
+app.use(cookieParser());
 
 app.post("/login", async(req, res) => {
     const { emailid, password } = req.body;
@@ -15,16 +16,35 @@ app.post("/login", async(req, res) => {
         if (!userData) {
             return res.status(400).send("User not found");
         }
-        const isPasswordValid = await bcrypt.compare(password, userData.password);
-        if (!isPasswordValid) {
-            return res.status(400).send("Invalid password");
+        const isPasswordValid = await userData.validatePassword(password);
+
+        if (isPasswordValid) {
+            //create a jwt token and send it to the user
+            // const token = jwt.sign({ _id: userData._id }, "Yousuf@1234", { expiresIn: "7d" });
+
+            const token = await userData.getjwt();
+            //add the token to cookie and sent this resp back to user
+            res.cookie("token", token);
+            res.send("User is logged in successfully");
+        } else {
+            throw new Error("Invalid password");
         }
-        res.send("Login successful");
     } catch (err) {
         res.status(500).send(err.message, "Error occurred while logging in");
     }
 })
 
+app.get("/profile", authMiddleware, async(req, res) => {
+    try {
+        const userProfile = await req.user;
+        if (!userProfile) {
+            throw new Error("User not found!")
+        }
+        res.send(userProfile);
+    } catch (err) {
+        res.status(500).send("Error" + err.message);
+    }
+})
 
 app.post("/signup", async(req, res) => {
     //validation of data
