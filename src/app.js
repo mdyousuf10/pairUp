@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser')
 const authrouter = require("./routes/Auth.js");
 const profileRouter = require("./routes/profile.js");
 const requestRouter = require("./routes/request.js");
+const icebreaker = require("./routes/icebreaker.ai.js")
 
 
 const app = express();
@@ -13,7 +14,9 @@ app.use(cookieParser());
 
 app.use("/auth", authrouter);
 app.use("/profile", profileRouter);
-app.use("/request", requestRouter);
+app.use("/", requestRouter);
+app.use("/", icebreaker);
+
 
 
 module.exports = app;

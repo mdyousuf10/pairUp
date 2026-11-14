@@ -32,6 +32,15 @@ const userSchema = new Schema({
         type: String,
         required: true,
         enum: ['Male', 'Female', 'Others', 'male', 'female', 'other']
+    },
+    bio: {
+        type: String,
+        default: "This is my Bio"
+    },
+    skills: {
+        type: [String],
+        required: true,
+        default: []
     }
 
 });

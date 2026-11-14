@@ -1,6 +1,9 @@
 const connectdb = require("./config/db");
 const app = require("./app");
 const port = 3000;
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 
 connectdb()
