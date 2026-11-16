@@ -7,6 +7,7 @@ const profileRouter = require("./routes/profile.js");
 const requestRouter = require("./routes/request.js");
 const icebreaker = require("./routes/icebreaker.ai.js");
 const allUsers = require("./routes/allUser.js")
+const feedRouter = require("./routes/feed.js")
 
 
 const app = express();
@@ -18,6 +19,8 @@ app.use("/profile", profileRouter);
 app.use("/", requestRouter);
 app.use("/", icebreaker);
 app.use("/", allUsers);
+app.use("/", feedRouter);
+
 
 
 
