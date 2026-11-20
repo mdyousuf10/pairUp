@@ -21,3 +21,4 @@ const gemini = new GoogleGenAI({
 // }
 
 // testModels();
+module.exports = gemini;
