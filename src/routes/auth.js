@@ -8,12 +8,11 @@ const user = require("../models/user.model")
 const authrouter = express.Router();
 
 
-authrouter.post("/signup", authMiddleware, async(req, res) => {
+authrouter.post("/signup", async(req, res) => {
     //validation of data
     try {
         validateUserData(req.body);
-    } catch (err) {
-        return res.status(400).send(err.message);
+    } catch (err) {return res.status(400).send(err.message);
     }
     //encrypt password
     const hashedPassword = await bcrypt.hash(req.body.password, 10);

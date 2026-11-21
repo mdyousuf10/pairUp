@@ -8,7 +8,7 @@ const gemini = require("../gemini.js");
 const generateIcebreakersRouter = express.Router();
 
 
-generateIcebreakersRouter.post("/icebreaker/:userId", authMiddleware, async(req, res) => {
+generateIcebreakersRouter.get("/icebreaker/:userId", authMiddleware, async(req, res) => {
     try {
         if (!process.env.GEMINI_API_KEY) {
             return res.status(503).json({

@@ -14,8 +14,8 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-app.use("/auth", authrouter);
-app.use("/profile", profileRouter);
+app.use("/", authrouter);
+app.use("/", profileRouter);
 app.use("/", requestRouter);
 app.use("/", icebreaker);
 app.use("/", allUsers);
