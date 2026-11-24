@@ -47,7 +47,7 @@ authrouter.post("/login", async(req, res) => {
             const token = await userData.getjwt();
             //add the token to cookie and sent this resp back to user
             res.cookie("token", token);
-            res.send("User is logged in successfully");
+            res.send(userData);
         } else {
             throw new Error("Invalid password");
         }

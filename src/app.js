@@ -1,5 +1,6 @@
 const express = require("express");
 const cookieParser = require('cookie-parser')
+const cors = require('cors')
 
 //router imports 
 const authrouter = require("./routes/Auth.js");
@@ -7,10 +8,14 @@ const profileRouter = require("./routes/profile.js");
 const requestRouter = require("./routes/request.js");
 const icebreaker = require("./routes/icebreaker.ai.js");
 const allUsers = require("./routes/allUser.js")
-const feedRouter = require("./routes/feed.js")
-
-
+const feedRouter = require("./routes/feed.js");
 const app = express();
+
+
+app.use(cors({
+    origin: "http://localhost:5173",
+    credentials: true
+}));
 app.use(express.json());
 app.use(cookieParser());
 
